@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ShowError = (props) => {
+const InputError = (props) => {
     return (
         <div>
             <span className="pf-5 text-danger align-middle">
@@ -11,4 +11,4 @@ const ShowError = (props) => {
 }
 
 
-export default ShowError;
+export default InputError;

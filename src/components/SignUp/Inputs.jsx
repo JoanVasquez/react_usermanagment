@@ -1,15 +1,16 @@
 import React from 'react';
 import Input from '../Input/Input.jsx';
-import ShowError from '../ShowError/ShowError.jsx';
+import InputError from '../InputError/InputError.jsx';
 
 const Inputs = props => {
     return (
         <div>
             {
-                props.origin === 'update'
+                props.state.id
                     ?
                     <div>
                         <Input
+                            isDisabled="true"
                             labelMessage="Id"
                             myInput="text"
                             inputId="id"
@@ -31,9 +32,8 @@ const Inputs = props => {
                     inputHolder=""
                     onInputChange={props.onInputChange}
                     inputValue={props.state.name}
-                    icon="fa fa-user"
-                    isInvalid={props.validation.name.isInvalid} >
-                    {props.validation.name.isInvalid ? <ShowError error={props.validation.name.message} /> : null}
+                    icon="fa fa-user" >
+                    {props.validation.name.isInvalid ? <InputError error={props.validation.name.message} /> : null}
                 </Input>
             </div>
 
@@ -45,9 +45,8 @@ const Inputs = props => {
                     inputHolder=""
                     onInputChange={props.onInputChange}
                     inputValue={props.state.email}
-                    icon="fas fa-at"
-                    isInvalid={props.validation.email.isInvalid} >
-                    {props.validation.email.isInvalid ? <ShowError error={props.validation.email.message} /> : null}
+                    icon="fas fa-at" >
+                    {props.validation.email.isInvalid ? <InputError error={props.validation.email.message} /> : null}
                 </Input>
             </div>
 
@@ -59,9 +58,8 @@ const Inputs = props => {
                     inputHolder=""
                     onInputChange={props.onInputChange}
                     inputValue={props.state.password}
-                    icon="fa fa-lock"
-                    isInvalid={props.validation.password.isInvalid} >
-                    {props.validation.password.isInvalid ? <ShowError error={props.validation.password.message} /> : null}
+                    icon="fa fa-lock" >
+                    {props.validation.password.isInvalid ? <InputError error={props.validation.password.message} /> : null}
                 </Input>
             </div>
 
@@ -73,9 +71,8 @@ const Inputs = props => {
                     inputHolder=""
                     onInputChange={props.onInputChange}
                     inputValue={props.state.passwordConfirmation}
-                    icon="fa fa-lock"
-                    isInvalid={props.validation.passwordConfirmation.isInvalid} >
-                    {props.validation.passwordConfirmation.isInvalid ? <ShowError error={props.validation.passwordConfirmation.message} /> : null}
+                    icon="fa fa-lock" >
+                    {props.validation.passwordConfirmation.isInvalid ? <InputError error={props.validation.passwordConfirmation.message} /> : null}
                 </Input>
             </div>
         </div>

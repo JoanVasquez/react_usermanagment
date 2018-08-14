@@ -1,20 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const Panel = props => {
-    return(
-        <div className={`card ${props.headerType}`}>
-            <div className="card-header">{props.headerMessage}</div>
-            <div className="card-body">
-                {props.children}
-            </div>
+export const Header = props => {
+    return <div className="card-header">{props.children}</div>
+}
+
+export const Body = props => {
+    return (
+        <div className="col-12">
+            <div className="card-body">{props.children}</div>
         </div>
     );
 }
 
-Panel.propTypes = {
-    headerType: PropTypes.string.isRequired,
-    headerMessage: PropTypes.string.isRequired
-}
-
-export default Panel;

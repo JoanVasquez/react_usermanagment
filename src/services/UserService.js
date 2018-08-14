@@ -1,35 +1,47 @@
 import axios from 'axios';
+import React from 'react';
 
 class UserService {
 
     url = 'http://localhost:8080/api/user/';
 
     async login(email, password) {
+        let header = { 'Content-Type': 'application/json' };
         try {
-            let result = await axios.post(`${this.url + 'login'}`, 
-            { email, password }, {'Content-Type': 'application/json'} );
-            if (result.data.success) {
-                sessionStorage.setItem('user', result.data.result);
-                sessionStorage.setItem('jwt', result.data.token);
-            }
+            return await axios.post(`${this.url + 'login'}`,
+                { email, password }, { headers: header });
         } catch (ex) {
-            throw JSON.parse(JSON.stringify(ex));
+            throw ex; 
         }
     }
 
     async saveUser(entity) {
+        let header = { 'Content-Type': 'application/json' };
         try {
             let result = await axios.put(`${this.url + 'register'}`,
-            entity, {'Content-Type': 'application/json'} );
-            if(result.data.success) {
-                await this.login(entity.email, entity.password);
-                return true;
+                entity, {headers: header});
+            if (result.data.success) {
+                return await this.login(entity.email, entity.password);
             }
             return false;
         } catch (ex) {
-            throw JSON.parse(JSON.stringify(ex));
+            throw ex; 
         }
     }
+
+    async readUser() {
+        let jwt = sessionStorage.getItem('jwt');
+        let header = { 
+            'Content-Type': 'application/json',
+            'x-access-token': jwt 
+        };
+        try {
+            return await axios.get(`${this.url + 'read'}`, {headers: header});
+        } catch (ex) {
+            throw ex; 
+        }
+    }
+
 }
 
 export default UserService;

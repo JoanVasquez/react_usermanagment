@@ -14,13 +14,14 @@ const Input = props => {
                         <div className="input-group">
                             <div className="input-group-addon" style={{ width: "2.6rem" }}><i className={props.icon}></i></div>
                             <input
+                                disabled={props.isDisabled}
                                 type={props.myInput}
                                 name={props.myInput}
                                 className={`form-control ${props.isInvalid ? 'is-invalid' : ''}`}
                                 id={props.inputId}
                                 placeholder={props.inputHolder}
                                 value={props.inputValue || ''}
-                                onChange={event => props.onInputChange(event, props.validationRules, props.labelMessage)}
+                                onChange={props.onInputChange}
                             />
 
                         </div>

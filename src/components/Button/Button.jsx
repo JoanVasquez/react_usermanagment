@@ -1,7 +1,11 @@
 import React from 'react';
 
 const Button = props => {
-    return <button type={props.type} className={props.btnClass} disabled={props.isValid === false}>{props.msg}</button>;
+    return props.click 
+    ? 
+    <button type={props.type} className={props.btnClass} onClick={props.click}>{props.msg}</button> 
+    : 
+    <button type={props.type} className={props.btnClass}>{props.msg}</button>;
 }
 
 export default Button;

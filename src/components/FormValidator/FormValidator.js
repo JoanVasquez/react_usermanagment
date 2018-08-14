@@ -6,11 +6,10 @@ class FormValidator {
   }
 
   validate(state) {
+    
     let validation = this.valid();
-
     this.validations.forEach(rule => {
       if (!validation[rule.field].isInvalid) {
-        
         const fieldValue = state[rule.field].toString();
         const args = rule.args || [];
         const validationMethod = 
@@ -29,8 +28,6 @@ class FormValidator {
 
   valid() {
     const validation = {}
-    const formValidator = new FormValidator
-
     this.validations.map(rule => (
       validation[rule.field] = { isInvalid: false, message: '' }
     ));

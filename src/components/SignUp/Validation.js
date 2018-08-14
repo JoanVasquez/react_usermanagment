@@ -46,7 +46,7 @@ export default function(matchPassword) {
           },
           { 
             field: 'passwordConfirmation', 
-            method: matchPassword,   // notice that we are passing a custom function here
+            method: matchPassword,
             validWhen: true, 
             message: 'Password and password confirmation do not match.'
           }

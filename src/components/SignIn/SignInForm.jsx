@@ -2,105 +2,91 @@ import React from 'react';
 import Button from '../Button/Button.jsx';
 import Inputs from './Inputs.jsx';
 import FormValidator from '../FormValidator/FormValidator';
+import ServerError from '../ServerError/ServerError.jsx';
 import Validation from './Validation';
-import UserController from '../../controllers/UserController';
+import UserService from '../../services/UserService';
 import { Link, Redirect } from 'react-router-dom';
 
 class SignInForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.validator = new FormValidator(Validation());
-        this.state = {
-            fields: {
-                email: '',
-                password: '',
-                jwt: null
-            },
-            validation: this.validator.valid(),
-            serverError: null
-        }
 
-        this.userController = new UserController();
-        this.submitted = false;
-        this.onSubmit = this.onSubmit.bind(this);
-        this.closeServerErrors = this.closeServerErrors.bind(this);
-        this.onInputChange = this.onInputChange.bind(this);
+    validator = new FormValidator(Validation());
+    state = {
+        fields: {
+            email: '',
+            password: ''
+        },
+        validation: this.validator.valid(),
+        serverError: null,
+        isRedirect: false
     }
 
-    componentWillMount() {
-        if (sessionStorage.getItem('jwt')) {
-            this.setState({ jwt: sessionStorage.getItem('jwt') });
-        }
-    }
+    userService = new UserService();
+    submitted = false;
 
-    onSubmit = event => {
+    onSubmit = async event => {
         event.preventDefault();
         const validation = this.validator.validate(this.state.fields);
         this.setState({ validation });
         this.submitted = true;
         let { email, password } = this.state.fields;
-
-        if (validation.isValid) {
-            this.userController.login(email, password).
-            then(() => {
-                this.setState({ jwt: sessionStorage.getItem('jwt') });
-            }).
-            catch(serverError => {
-                if (Object.keys(serverError).length !== 0) this.setState({ serverError });
-            });
+        if(validation.isValid) {
+            try {
+                let result = await this.userService.login(email, password);
+                let user = result.data.result;
+                let jwt = result.data.token;
+                sessionStorage.setItem('user', user);
+                sessionStorage.setItem('jwt', jwt);
+                this.setState({ isRedirect: true });
+            } catch (ex) {
+                this.setState({ serverError: ex });
+            }
         }
     }
 
-    onInputChange(event) {
+    onInputChange = event => {
         let fields = this.state.fields;
         fields[event.target.id] = event.target.value;
         this.setState({ fields });
     }
 
-    closeServerErrors() {
+    closeServerErrors = () => {
         this.setState({ serverError: null });
     }
 
 
     render() {
-        if (this.state.jwt) {
-            return <Redirect to='/Main' />
-        }
-
         let validation = this.submitted ?
             this.validator.validate(this.state.fields) :
             this.state.validation;
 
         return (
-
             <div>
                 {
-                    this.state.serverError
-                        ?
-                        <div className="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Holy guacamole an error occurred!</strong> Check the information below below.
-                            <ul className="list-group mt-2">
-                                {this.state.serverError}
-                            </ul>
-                            <button type="button" className="close" onClick={this.closeServerErrors} data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        :
+                    this.state.serverError ?
+                        <ServerError
+                            serverError={this.state.serverError}
+                            closeServerErrors={this.closeServerErrors.bind(this)} /> :
                         null
                 }
 
-                <form className="form-horizontal " onSubmit={this.onSubmit}>
-                    <Inputs validation={validation} onInputChange={this.onInputChange} state={this.state.fields} />
-                    <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                        <div className="btn-group mr-2" role="group" aria-label="Second group">
-                            <Button type="submit" btnClass="btn btn-success" msg="Sign In" />
-                        </div>
-                        <div className="btn-group" role="group" aria-label="Third group">
-                            <Link to='/SignUp'>Not a member? SignUp</Link>
-                        </div>
-                    </div>
-                </form>
+                {
+                    this.state.isRedirect ?
+                        <Redirect to="/main" /> :
+
+                        <form className="form-horizontal " onSubmit={this.onSubmit.bind(this)}>
+                            <Inputs validation={validation} onInputChange={this.onInputChange.bind(this)} state={this.state.fields} />
+                            <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                <div className="btn-group mr-2" role="group" aria-label="Second group">
+                                    <Button type="submit" btnClass="btn btn-success" msg="Sign In" />
+                                </div>
+                                <div className="btn-group" role="group" aria-label="Third group">
+                                    <Link to='/SignUp'>Not a member? SignUp</Link>
+                                </div>
+                            </div>
+                        </form>
+                }
+
+
             </div>
         );
     }
