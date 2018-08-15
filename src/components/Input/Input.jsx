@@ -17,7 +17,7 @@ const Input = props => {
                                 disabled={props.isDisabled}
                                 type={props.myInput}
                                 name={props.myInput}
-                                className={`form-control ${props.isInvalid ? 'is-invalid' : ''}`}
+                                className={"form-control"}
                                 id={props.inputId}
                                 placeholder={props.inputHolder}
                                 value={props.inputValue || ''}

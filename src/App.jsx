@@ -9,7 +9,6 @@ import './assets/css/Home.css';
 class App extends React.Component {
 
   render() {
-    let jwt = sessionStorage.getItem('jwt');
     return (
       <Router>
         <div className="container-fluid bg">

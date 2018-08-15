@@ -13,8 +13,7 @@ const Inputs = props => {
                     inputHolder=""
                     onInputChange={props.onInputChange}
                     inputValue={props.state.email}
-                    icon="fas fa-at"
-                    isInvalid={props.validation.email.isInvalid} >
+                    icon="fas fa-at">
                     {props.validation.email.isInvalid ? <InputError error={props.validation.email.message} /> : null}
                 </Input>
             </div>
@@ -27,8 +26,7 @@ const Inputs = props => {
                     inputHolder=""
                     onInputChange={props.onInputChange}
                     inputValue={props.state.password}
-                    icon="fa fa-lock"
-                    isInvalid={props.validation.password.isInvalid} >
+                    icon="fa fa-lock">
                     {props.validation.password.isInvalid ? <InputError error={props.validation.password.message} /> : null}
                 </Input>
             </div>
