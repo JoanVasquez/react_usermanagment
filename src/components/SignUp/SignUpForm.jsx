@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../Button/Button.jsx';
 import Inputs from './Inputs.jsx';
 import FormValidator from '../FormValidator/FormValidator';
-import ServerError from '../ServerError/ServerError.jsx';
+import Alert from '../Alert/Alert.jsx';
 import Validation from './Validation';
 import UserService from '../../services/UserService';
 import { Link, Redirect } from 'react-router-dom';
@@ -21,6 +21,7 @@ class SignUpForm extends React.Component {
         },
         validation: this.validator.valid(),
         serverError: null,
+        serverSuccess: null,
         isRedirect: false
     }
 
@@ -53,13 +54,14 @@ class SignUpForm extends React.Component {
         let result = await this.userService.saveUser(this.state.fields);
         let user = result.data.result;
         let jwt = result.data.token;
-        sessionStorage.setItem('user', user);
+        sessionStorage.setItem('user', JSON.stringify(user));
         sessionStorage.setItem('jwt', jwt);
         this.setState({ isRedirect: true });
     }
 
     async update() {
-        console.log('update')
+        await this.userService.updateUser(this.state.fields);
+        this.setState({ serverSuccess: 'User Updated! '});
     }
 
     onInputChange(event) {
@@ -68,7 +70,7 @@ class SignUpForm extends React.Component {
         this.setState({ fields });
     }
 
-    closeServerErrors = () => {
+    closeAlert = () => {
         this.setState({ serverError: null });
     }
 
@@ -92,9 +94,20 @@ class SignUpForm extends React.Component {
             <div>
                 {
                     this.state.serverError ?
-                        <ServerError
+                        <Alert
+                            alertClass="alert-danger"
+                            error="true"
                             serverError={this.state.serverError}
-                            closeServerErrors={this.closeServerErrors.bind(this)} /> :
+                            closeAlert={this.closeAlert.bind(this)} /> :
+                        null
+                }
+
+                {
+                    this.state.serverSuccess ?
+                        <Alert
+                            alertClass="alert-success"
+                            message={this.state.serverSuccess}
+                            closeAlert={this.closeAlert.bind(this)} /> :
                         null
                 }
 

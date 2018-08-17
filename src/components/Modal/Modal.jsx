@@ -2,7 +2,7 @@ import React from 'react';
 
 const Modal = props => {
     return (
-        <div className="modal fade" id={props.id}  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal fade" id={props.id} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -16,7 +16,7 @@ const Modal = props => {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" className="btn btn-primary" onClick={props.onSave}>Save changes</button>
+                        <button type="button" className={`btn ${props.cssClass}`} onClick={props.action} data-dismiss="modal">{props.message}</button>
                     </div>
                 </div>
             </div>

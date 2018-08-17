@@ -17,7 +17,7 @@ const Inputs = props => {
                             inputHolder="User Id"
                             onInputChange={props.onInputChange}
                             inputValue={props.state.id}
-                            icon="fas fa-fingerprint" >
+                            icon="fas fa-id-card" >
                         </Input>
                     </div>
                     :
@@ -39,6 +39,7 @@ const Inputs = props => {
 
             <div>
                 <Input
+                    isDisabled={`${props.state.id ? 'disabled' : ''}`}
                     labelMessage="Email"
                     myInput="email"
                     inputId="email"

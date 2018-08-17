@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../Button/Button.jsx';
 import Inputs from './Inputs.jsx';
 import FormValidator from '../FormValidator/FormValidator';
-import ServerError from '../ServerError/ServerError.jsx';
+import Alert from '../Alert/Alert.jsx';
 import Validation from './Validation';
 import UserService from '../../services/UserService';
 import { Link, Redirect } from 'react-router-dom';
@@ -34,7 +34,7 @@ class SignInForm extends React.Component {
                 let result = await this.userService.login(email, password);
                 let user = result.data.result;
                 let jwt = result.data.token;
-                sessionStorage.setItem('user', user);
+                sessionStorage.setItem('user', JSON.stringify(user));
                 sessionStorage.setItem('jwt', jwt);
                 this.setState({ isRedirect: true });
             } catch (ex) {
@@ -49,7 +49,7 @@ class SignInForm extends React.Component {
         this.setState({ fields });
     }
 
-    closeServerErrors = () => {
+    closeAlert = () => {
         this.setState({ serverError: null });
     }
 
@@ -63,9 +63,11 @@ class SignInForm extends React.Component {
             <div>
                 {
                     this.state.serverError ?
-                        <ServerError
+                        <Alert
+                            alertClass="alert-danger"
+                            error="true"
                             serverError={this.state.serverError}
-                            closeServerErrors={this.closeServerErrors.bind(this)} /> :
+                            closeAlert={this.closeAlert.bind(this)} /> :
                         null
                 }
 

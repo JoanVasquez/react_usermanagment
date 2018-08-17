@@ -28,6 +28,34 @@ class UserService {
         }
     }
 
+    async updateUser(entity) {
+        let jwt = sessionStorage.getItem('jwt');
+        let header = { 
+            'Content-Type': 'application/json',
+            'x-access-token': jwt 
+        };
+        console.log(entity);
+        console.log(jwt)
+        try {
+            await axios.post(`${this.url + 'update'}`, entity, {headers: header});
+        } catch (ex) {
+            throw ex; 
+        }
+    }
+
+    async deleteUser(entity) {
+        let jwt = sessionStorage.getItem('jwt');
+        let header = { 
+            'Content-Type': 'application/json',
+            'x-access-token': jwt 
+        };
+        try {
+            await axios.delete(`${this.url + 'delete'}`, {data: entity, headers: header});
+        } catch (ex) {
+            throw ex; 
+        }
+    }
+
     async readUser() {
         let jwt = sessionStorage.getItem('jwt');
         let header = { 

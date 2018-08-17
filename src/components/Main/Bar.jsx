@@ -11,7 +11,7 @@ const Bar = props => {
                     value={props.filter} 
                     onChange={event => props.setFilter(event.target.value)} />
             <span className="input-group-btn mx-2">
-                <Button type="button" btnClass="btn btn-light" msg="Logout" onClick={props.click}/>
+                <Button type="button" btnClass="btn btn-light" msg="Logout" click={props.onLogout}/>
             </span>
         </div>
     );
