@@ -1,4 +1,4 @@
-import validator from 'validator';
+import validator from "validator";
 
 class FormValidator {
   constructor(validations) {
@@ -6,18 +6,17 @@ class FormValidator {
   }
 
   validate(state) {
-    
     let validation = this.valid();
     this.validations.forEach(rule => {
       if (!validation[rule.field].isInvalid) {
         const fieldValue = state[rule.field].toString();
         const args = rule.args || [];
-        const validationMethod = 
-              typeof rule.method === 'string' ?
-              validator[rule.method] : 
-              rule.method;
-        if(validationMethod(fieldValue, ...args, state) !== rule.validWhen) {
-          validation[rule.field] = { isInvalid: true, message: rule.message }
+        const validationMethod =
+          typeof rule.method === "string"
+            ? validator[rule.method]
+            : rule.method;
+        if (validationMethod(fieldValue, ...args, state) !== rule.validWhen) {
+          validation[rule.field] = { isInvalid: true, message: rule.message };
           validation.isValid = false;
         }
       }
@@ -27,10 +26,10 @@ class FormValidator {
   }
 
   valid() {
-    const validation = {}
-    this.validations.map(rule => (
-      validation[rule.field] = { isInvalid: false, message: '' }
-    ));
+    const validation = {};
+    this.validations.map(
+      rule => (validation[rule.field] = { isInvalid: false, message: "" })
+    );
 
     return { isValid: true, ...validation };
   }
