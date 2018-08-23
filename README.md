@@ -42,12 +42,12 @@ Remember to make **npm i or npm install** in the root of the app to install the 
 
 ## Demonstration
 
-![Angular App](https://raw.githubusercontent.com/JoanVasquez/react_usermanagment/master/demonstration/1.png)
+![React App](https://raw.githubusercontent.com/JoanVasquez/react_usermanagment/master/demonstration/1.png)
 
-![Angular App](https://raw.githubusercontent.com/JoanVasquez/react_usermanagment/master/demonstration/2.png)
+![React App](https://raw.githubusercontent.com/JoanVasquez/react_usermanagment/master/demonstration/2.png)
 
-![Angular App](https://raw.githubusercontent.com/JoanVasquez/react_usermanagment/master/demonstration/3.png)
+![React App](https://raw.githubusercontent.com/JoanVasquez/react_usermanagment/master/demonstration/3.png)
 
-![Angular App](https://raw.githubusercontent.com/JoanVasquez/react_usermanagment/master/demonstration/4.png)
+![React App](https://raw.githubusercontent.com/JoanVasquez/react_usermanagment/master/demonstration/4.png)
 
-![Angular App](https://raw.githubusercontent.com/JoanVasquez/react_usermanagment/master/demonstration/5.png)
+![React App](https://raw.githubusercontent.com/JoanVasquez/react_usermanagment/master/demonstration/5.png)
